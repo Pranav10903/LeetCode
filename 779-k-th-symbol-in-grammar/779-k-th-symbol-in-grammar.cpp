@@ -5,10 +5,10 @@ public:
             return;
         }
         
-        int z = 1 << (n-1);
-        if(k > z/2){
+        int mid = pow(2,n-1)/2;
+        if(k > mid){
             x = !x;
-            return getVal(n-1, k-z/2, x);
+            return getVal(n-1, k-mid, x);
         }
         return getVal(n-1, k, x);
     }
