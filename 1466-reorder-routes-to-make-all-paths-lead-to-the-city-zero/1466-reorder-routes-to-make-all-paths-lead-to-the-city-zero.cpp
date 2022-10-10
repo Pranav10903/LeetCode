@@ -1,29 +1,37 @@
 class Solution {
 public:
-    int minReorder(int n, vector<vector<int>>& con) {
-         set<vector<int>> edges;
-        for(auto x : con) edges.insert(x);   
-        
-        vector<vector<int>> g(n);
-        for(auto x : con){
-            int u = x[0], v = x[1];
-            g[u].push_back(v);
-            g[v].push_back(u);
+    int ans = 0;
+    int minReorder(int n, vector<vector<int>>& arr) {
+        vector<int>neighbour[n],adj[n];
+        for(auto it:arr){
+            neighbour[it[0]].push_back(it[1]);
+            neighbour[it[1]].push_back(it[0]);
+            adj[it[0]].push_back(it[1]);
         }
-        
-        vector<bool> vis(n,false); vis[0] = true;
-        queue<int> q; q.push(0);
-        int cnt = 0;
+        queue<int>q;
+        vector<int>vis(n,0);
+        q.push(0);
         while(!q.empty()){
-            int u = q.front(); q.pop();
-            for(int v : g[u]){
-                if(!vis[v]){
-                    if(edges.find({v,u}) == edges.end()) cnt++;
-                    q.push(v); vis[v] = true;
+            int node = q.front();
+            vis[node] = 1;
+            q.pop();
+            for(auto Neighbour:neighbour[node]){
+                if(!vis[Neighbour]){
+                    bool canReach = false;
+                    for(auto AdjacenttoNeighbour:adj[Neighbour]){
+                        if(AdjacenttoNeighbour == node){
+                            canReach = true;
+                            q.push(Neighbour);
+                            break;
+                        }
+                    }
+                    if(!canReach) {
+                        ans++;
+                        q.push(Neighbour);
+                    }
                 }
             }
         }
-        
-        return cnt;
+        return ans;
     }
 };
