@@ -11,7 +11,6 @@ public:
                 if(map[s[begin++]]++==0) counter++;  //make it invalid
             }  
         }
-        return d==INT_MAX? "":s.substr(head, d);
-        
+        return d==INT_MAX? "":s.substr(head, d);        
     }
 };
