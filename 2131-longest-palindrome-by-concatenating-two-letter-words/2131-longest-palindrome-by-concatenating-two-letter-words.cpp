@@ -1,46 +1,63 @@
+
+
 class Solution {
+
 public:
-    int longestPalindrome(vector<string>& words) {
-        int maxi = 0;
-        int res = 0;
-        bool flag = 0;
-        unordered_map<string,int>mpp1,mpp2;
 
-        for(auto &it : words)
-        {
-           if(it[1]==it[0]) mpp1[it]++;
-              
-           else  mpp2[it]++;
-               
-        }
-        
-        for(auto &it : mpp2)
-        {
-            string r = it.first;
-            reverse(r.begin(),r.end());
-
-            if(mpp2.find(r) != mpp2.end() && mpp2[r] > 0 && it.second > 0)
-            {
-               res += 4 * min(mpp2[r],it.second);
-               mpp2[r] = -1;
-               mpp2[it.first] = -1;
-              
-            }
-        }
- 
-        for(auto &it : mpp1)
-        {
-            if(it.second % 2==0)  res += it.second * 2;
-            
-            else
-            {
-                 flag = 1;
-                 res += (it.second-1) * 2;
-            }
-        }
-        
-       if(flag) res += 2;
-       
-       return res;
+    string reversed(string s) {
+        string t = s;
+        reverse(t.begin(), t.end());
+        return t;
     }
+    int longestPalindrome(vector<string>& words) {
+        int ans = 0, middle = 0;
+        // count the frequency of each word
+        unordered_map<string, int> cnt;
+        for (auto word : words) cnt[word]++;
+        for (auto [s, f] : cnt) {
+            // using rev(s) is just to generalise the solution
+            // in this problem, we can just check if s[0] != s[1]
+            string rev = reversed(s);
+            if (s != rev) {
+                // case 1: the word is not same as the reversed self, e.g. "ab" != "ba
+                // find the reversed self
+                if (cnt.count(rev)) {
+                    ans += min(cnt[s], cnt[rev]);
+                }
+            } else {
+
+                // case 2: both character are same, e.g. aa
+
+                // we can put it on both side
+
+                ans += f;
+
+                // however, if the frequency is odd
+
+                if (f & 1) {
+
+                    // we can place one in the middle and others on the side
+
+                    middle = 1;
+
+                    ans -= 1;
+
+                }
+
+            }
+
+        }
+
+        ans += middle;
+
+        // at the end, we need to multiply the answer by 2
+
+        // e.g. if frequency of "aa" is 2, the longest palindrome is 4 ("aaaa")
+
+        return 2 * ans;
+
+    }
+
 };
+        
+    
