@@ -1,20 +1,22 @@
 class Solution {
 public:
     string countAndSay(int n) {
-         if (n == 0) return "";
-    string res = "1";
-    while (--n) {
-        string cur = "";
-        for (int i = 0; i < res.size(); i++) {
-            int count = 1;
-             while ((i + 1 < res.size()) && (res[i] == res[i + 1])){
-                count++;    
-                i++;
-            }
-            cur += to_string(count) + res[i];
+        if(n==0) {
+            return "";
         }
-        res = cur;
-    }
-    return res;
+        string val = "1";
+        while(--n){
+            string s = "";
+            for(int i=0;i<val.length();i++){
+                int count = 1;
+                while(i+1 < val.length() and (val[i]==val[i+1])){
+                    count++;
+                    i++;
+                }
+                s += to_string(count) + val[i];
+            }
+            val = s;
+        }
+        return val;
     }
 };
