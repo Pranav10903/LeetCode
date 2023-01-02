@@ -1,13 +1,13 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int size = nums.size() - 1, curr = -1, next = 0, ans = 0;
-        for (int i = 0; next < size; i++) {
-            if (i > curr){
+        int size = nums.size() - 1, currentPosition = -1, nextPosition = 0, ans = 0;
+        for (int index = 0; nextPosition < size; index++) {
+            if (index > currentPosition){
                 ans++;
-                curr = next;
+                currentPosition = nextPosition;
             }
-            next = max(next, nums[i] + i);
+            nextPosition = max(nextPosition, nums[index] + index);
         }
         return ans;
     }
