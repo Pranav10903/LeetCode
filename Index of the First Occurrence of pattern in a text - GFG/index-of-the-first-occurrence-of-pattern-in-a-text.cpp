@@ -7,17 +7,21 @@ using namespace std;
 
 class Solution {
   public:
-    int findMatching(string haystack, string needle) {
+    int findMatching(string text, string pat) {
         // Code here
-        int m = haystack.size(), n = needle.size();
-        for (int i = 0; i <= m - n; i++) {
+        int m = text.length();
+        int n = pat.length();
+        if(m<n){
+            return -1;
+        }
+        for(int i=0;i<=m-n;i++){
             int j = 0;
-            for (j = 0; j < n; j++) {
-                if (haystack[i + j] != needle[j]) {
+            for(j=0;j<n;j++){
+                if(text[i+j]!=pat[j]){
                     break;
                 }
             }
-            if (j == n) {
+            if(j==n){
                 return i;
             }
         }
