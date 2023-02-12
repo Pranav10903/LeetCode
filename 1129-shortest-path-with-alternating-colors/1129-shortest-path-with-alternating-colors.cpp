@@ -13,7 +13,6 @@ public:
         dist[0] = 0;
         queue<vector<int>>q;
         vis[0][1] = vis[0][0] = true;
-        // startnode, no of steps distance, color of edge
         q.push({0,0, -1});
         while(!q.empty()){
             auto iter = q.front();
@@ -22,13 +21,11 @@ public:
             int distance = iter[1];
             int prevC = iter[2];
             for(auto it : adj[node]){
-                int neighbourNode = it.first;
-                int curColor = it.second;
-                if(curColor != prevC && vis[neighbourNode][curColor]==false){
-                    vis[neighbourNode][curColor] = true;
-                    q.push({neighbourNode, 1+distance, curColor});
-                    if(dist[neighbourNode]==-1){
-                        dist[neighbourNode] = 1 + distance;
+                if(it.second != prevC && vis[it.first][it.second]==false){
+                    vis[it.first][it.second] = true;
+                    q.push({it.first, 1+distance, it.second});
+                    if(dist[it.first]==-1){
+                        dist[it.first] = 1 + distance;
                     }
                 }
             }
